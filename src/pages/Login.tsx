@@ -4,12 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../assets/fbase.tsx";
-// import { ReactNode } from "react";
-
-
-// interface ClickProps {
-//   onClick: () => void;
-// }
 
 export default function Login() {
   const navigate = useNavigate()
@@ -21,7 +15,9 @@ export default function Login() {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        window.alert('로그인 완료!')
         navigate('/')
+
       })
       .catch((error) => {
         console.log(error);

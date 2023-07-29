@@ -1,6 +1,7 @@
-import ReviewList from "../component/ReviewList";
-import Layout from "../component/Layout.tsx";
 import { useState } from "react";
+import SearchList from "../component/SearchList.tsx";
+import Layout from "../component/Layout.tsx";
+
 
 export default function MainPage() {
   const [searchTitle, setSearchTitle] = useState([]);
@@ -11,11 +12,12 @@ export default function MainPage() {
 
   return (
     <Layout >
-      <h1>추천</h1>
-      <ReviewList />
+      <h1>검색</h1>
+      <SearchList />
 
     </Layout>
      
   );
 }
+
 

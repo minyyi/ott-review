@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../component/Layout.tsx";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 import styled from "styled-components";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {auth} from '../assets/fbase.tsx'
 
 
@@ -11,6 +11,8 @@ export default function SignUp() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState<string>('')
+  const [isPassword, setIsPassword] = useState<boolean>(false)
 
   const signUp = (e) => {
     console.log('눌림')
@@ -24,6 +26,20 @@ export default function SignUp() {
         console.log(error);
       });
   };
+
+  const onChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$/
+    const passwordCurrent = e.target.value
+    setPassword(passwordCurrent)
+
+    if (!passwordRegex.test(passwordCurrent)) {
+      setPasswordMessage('숫자+영문자 조합으로 6자리 이상 입력해주세요!')
+      setIsPassword(false)
+    } else {
+      setPasswordMessage('안전한 비밀번호에요 : )')
+      setIsPassword(true)
+    }
+  }, [])
 
   console.log({email,password})
 
@@ -39,10 +55,13 @@ export default function SignUp() {
           />
 
           <Label>비밀번호</Label>
-          <Input type="password" placeholder="영어, 숫자, 기호를 포함하여 8자 이상"
+          <Input type="password" placeholder="영어, 숫자 6자 이상"
            value={password}
-           onChange={(e)=> setPassword(e.target.value)}
+           onChange={onChangePassword}
            />
+             {password.length > 0 && (
+            <span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>
+          )}
 
           <Button onClick={signUp}>회원가입</Button>
         </InputBox>
