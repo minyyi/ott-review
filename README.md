@@ -2,7 +2,8 @@
 
 다양한 오티티 콘텐츠를 보고 그에대한 기록을 남기는 커뮤니티를 제작했습니다. 
 
-npm install
+npm install 
+//
 npm run dev
 
 firebase auth - 회원가입, 로그인
